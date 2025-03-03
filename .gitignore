@@ -1,0 +1,47 @@
+# Entorno virtual
+proyecto-core/venv/
+
+# Archivos de caché de Python
+__pycache__/
+*.pyc
+
+# Archivos de entorno
+.env
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de configuración de IDE
+.vscode/
+.idea/
+
+# Otros archivos innecesarios
+.pytest_cache/
+.mypy_cache/
+.coverage
+*.cover
+*.log
+*.pot
+*.mo
+*.swp
+*.swo
+*.swn
+*.bak
+*.tmp
+*.old
+*.orig
+
+# Archivos de configuración de herramientas
+*.pylint.d/
+*.mypy_cache/
+*.pytest_cache/
+*.tox/
+*.coverage
+.coverage.*
+.cache/
+nosetests.xml
+coverage.xml
+*.egg-info/
+dist/
+build/
