@@ -1,22 +1,53 @@
 # Roadmap Actualizado: Sistema Core con Python y MySQL
 
-## Comandos Útiles
+## Comandos Útiles de Inicialización
 
-1. **Crear entorno virtual**:
+1. **Preparación del Entorno**:
    ```bash
+   # Crear entorno virtual
    python -m venv venv
+   
    # Activar en Windows
    venv\Scripts\activate
+   
    # Activar en macOS/Linux
    source venv/bin/activate
-   ```
-2. **Instalar dependencias**:
-   ```bash
+   
+   # Instalar dependencias
    pip install -r requirements.txt
-   ```   
-3. **Iniciar servidor de desarrollo**:
+   ```
+
+2. **Configuración de Base de Datos**:
    ```bash
-   uvicorn src.core.api.main:app --reload
+   # Opción 1: Usar schema.sql directamente en MySQL
+   mysql -u root -p core_system < ScriptDB/schema.sql
+
+   # Opción 2: Usar script de inicialización de SQLAlchemy
+   python -m src.core.database.db_setup --force
+
+   # Opción 3: Usar script de inicialización con schema.sql
+   python -m src.core.database.db_setup --use-sql --force
+   ```
+
+3. **Ejecutar Pruebas**:
+   ```bash
+   # Ejecutar todas las pruebas
+   pytest tests/ -v
+
+   # Ejecutar pruebas específicas de base de datos
+   pytest tests/test_database.py -v
+
+   # Ejecutar pruebas con reporte HTML
+   pytest tests/ --html=report.html
+   ```
+
+4. **Mantenimiento de Base de Datos**:
+   ```bash
+   # Limpiar y reinicializar base de datos
+   python -m src.core.database.db_setup --force
+
+   # Verificar estado de las tablas
+   python -m src.core.database.db_setup
    ```
 
 ## Introducción
@@ -51,19 +82,19 @@
    - Crear la estructura de carpetas según el diseño propuesto
    - Inicializar archivo `requirements.txt` con dependencias básicas:
    ```
-   fastapi==0.103.1
-   uvicorn==0.23.2
-   sqlalchemy==2.0.20
-   mysql-connector-python==8.1.0
-   python-dotenv==1.0.0
-   pydantic==2.3.0
-   pytest==7.4.2
+   fastapi==0.115.11
+   uvicorn==0.34.0
+   sqlalchemy==2.0.38
+   mysql-connector-python==9.2.0
+   python-dotenv==1.0.1
+   pydantic==2.10.6
+   pytest==8.3.5
    PyPDF2==3.0.1
-   pandas==2.1.0
-   openpyxl==3.1.2
-   openai==0.28.0
-   python-multipart==0.0.6
-   PyQt5==5.15.9  # Para interfaz de administración
+   pandas==2.2.3
+   openpyxl==3.1.5
+   openai==1.65.2
+   python-multipart==0.0.20
+   PyQt5==5.15.11  # Para interfaz de administración
    ```
 
 3. **Día 5: Configuración de variables de entorno**
@@ -346,67 +377,117 @@
    - Pruebas de flujo completo con plugins
    - Refinamiento de la experiencia de usuario
 
+## Fase 9: Monitoreo y Mantenimiento (Semanas 17-18)
+
+### Semana 17: Sistema de Monitoreo
+
+1. **Día 1-2: Implementación de Logs**
+   - Sistema centralizado de logging
+   - Rotación de logs
+   - Niveles de severidad
+   - Alertas automáticas
+
+2. **Día 3-4: Dashboard de Monitoreo**
+   - Métricas de rendimiento
+   - Uso de recursos
+   - Estado de plugins
+   - Estadísticas de procesamiento
+
+3. **Día 5: Sistema de Alertas**
+   - Configuración de umbrales
+   - Notificaciones por email/webhook
+   - Integración con sistemas externos
+
+### Semana 18: Mantenimiento y Backup
+
+1. **Día 1-2: Sistema de Backup**
+   - Backup automático de base de datos
+   - Respaldo de configuraciones
+   - Versionado de plugins
+   - Scripts de recuperación
+
+2. **Día 3-4: Herramientas de Mantenimiento**
+   - Limpieza de archivos temporales
+   - Optimización de base de datos
+   - Gestión de caché
+   - Actualización de plugins
+
+3. **Día 5: Documentación de Mantenimiento**
+   - Guías de troubleshooting
+   - Procedimientos de recuperación
+   - Manual de operaciones
+   - Plan de contingencia
+
 ## Consejos Adicionales para el Desarrollo de la Interfaz 
 
 ### Estructura de la Aplicación
 
 ```
 proyecto-core/
-└── src/
-    ├── desktop_app/
-    │   ├── __init__.py
-    │   ├── main.py                  # Punto de entrada
-    │   ├── resources/               # Recursos (iconos, estilos)
-    │   ├── views/                   # Interfaces
-    │   │   ├── main_window.py
-    │   │   ├── document_view.py
-    │   │   ├── analysis_view.py
-    │   │   └── settings_view.py
-    │   ├── controllers/             # Lógica de la interfaz
-    │   │   ├── document_controller.py
-    │   │   ├── analysis_controller.py
-    │   │   └── settings_controller.py
-    │   ├── models/                  # Modelos específicos para la UI
-    │   │   └── table_models.py
-    │   └── utils/                   # Utilidades para la UI
-    │       ├── qt_helpers.py
-    │       └── config_manager.py
-    ├── core/
-    │   ├── __init__.py
-    │   ├── services/                # Servicios de negocio
-    │   │   ├── document_service.py
-    │   │   ├── analysis_service.py
-    │   │   └── file_processor_service.py
-    │   ├── repositories/            # Repositorios de datos
-    │   │   ├── document_repository.py
-    │   │   ├── category_repository.py
-    │   │   └── entity_repository.py
-    │   ├── processors/              # Procesadores de archivos
-    │   │   ├── __init__.py
-    │   │   ├── pdf_processor.py
-    │   │   ├── excel_processor.py
-    │   │   ├── word_processor.py
-    │   │   ├── uasset_processor.py  # Procesador para archivos UASSET
-    │   │   └── processor_factory.py
-    │   ├── config/                  # Configuración centralizada
-    │   │   └── settings.py
-    │   └── api/                     # API RESTful
-    │       ├── __init__.py
-    │       ├── main.py              # Punto de entrada de la API
-    │       ├── endpoints/           # Endpoints de la API
-    │       │   ├── document_endpoints.py
-    │       │   ├── analysis_endpoints.py
-    │       │   └── file_endpoints.py
-    │       └── schemas/             # Esquemas de datos para la API
-    │           ├── document_schema.py
-    │           ├── analysis_schema.py
-    │           └── file_schema.py
-    └── tests/                       # Pruebas unitarias y de integración
-        ├── __init__.py
-        ├── test_services.py
-        ├── test_repositories.py
-        ├── test_processors.py
-        └── test_api.py
+├── src/
+│   ├── desktop_app/
+│   │   ├── __init__.py
+│   │   ├── main.py                  # Punto de entrada
+│   │   ├── resources/               # Recursos (iconos, estilos)
+│   │   ├── views/                   # Interfaces
+│   │   │   ├── main_window.py
+│   │   │   ├── document_view.py
+│   │   │   ├── analysis_view.py
+│   │   │   └── settings_view.py
+│   │   ├── controllers/             # Lógica de la interfaz
+│   │   │   ├── document_controller.py
+│   │   │   ├── analysis_controller.py
+│   │   │   └── settings_controller.py
+│   │   ├── models/                  # Modelos específicos para la UI
+│   │   │   └── table_models.py
+│   │   └── utils/                   # Utilidades para la UI
+│   │       ├── qt_helpers.py
+│   │       └── config_manager.py
+│   ├── core/
+│   │   ├── __init__.py
+│   │   ├── services/                # Servicios de negocio
+│   │   │   ├── document_service.py
+│   │   │   ├── analysis_service.py
+│   │   │   └── file_processor_service.py
+│   │   ├── repositories/            # Repositorios de datos
+│   │   │   ├── document_repository.py
+│   │   │   ├── category_repository.py
+│   │   │   └── entity_repository.py
+│   │   ├── models/                  # Modelos de datos
+│   │   │   ├── __init__.py
+│   │   │   └── models.py
+│   │   ├── processors/              # Procesadores de archivos
+│   │   │   ├── __init__.py
+│   │   │   ├── pdf_processor.py
+│   │   │   ├── excel_processor.py
+│   │   │   ├── word_processor.py
+│   │   │   ├── uasset_processor.py  # Procesador para archivos UASSET
+│   │   │   └── processor_factory.py
+│   │   ├── config/                  # Configuración centralizada
+│   │   │   └── settings.py
+│   │   └── api/                     # API RESTful
+│   │       ├── __init__.py
+│   │       ├── main.py              # Punto de entrada de la API
+│   │       ├── endpoints/           # Endpoints de la API
+│   │       │   ├── document_endpoints.py
+│   │       │   ├── analysis_endpoints.py
+│   │       │   └── file_endpoints.py
+│   │       └── schemas/             # Esquemas de datos para la API
+│   │           ├── document_schema.py
+│   │           ├── analysis_schema.py
+│   │           └── file_schema.py
+│   ├── tests/                       # Pruebas unitarias y de integración
+│   │   ├── __init__.py
+│   │   ├── test_services.py
+│   │   ├── test_repositories.py
+│   │   ├── test_processors.py
+│   │   └── test_api.py
+│   ├── requirements.txt                    # Dependencias del proyecto
+│   ├── .env.example
+│   └── README.md                           # Documentación del proyecto
+├── .gitignore
+├── .env.example                         # Archivo de variables de entorno
+└── python-mysql-core-roadmap-updated.md # Documento de referencia
 ```
 
 ### Consejos para Desarrollo con PyQt5
