@@ -3,6 +3,17 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from ..config.database import Base
 
+# Primero definimos FileRelationship para que esté disponible para File
+class FileRelationship(Base):
+    __tablename__ = "file_relationships"
+
+    source_file_id = Column(Integer, ForeignKey('files.id'), primary_key=True)
+    related_file_id = Column(Integer, ForeignKey('files.id'), primary_key=True)
+    relationship_type = Column(String(50))
+    confidence = Column(Float)
+    relationship_metadata = Column(JSON)  # Cambiado de metadata a relationship_metadata
+    created_at = Column(DateTime, default=func.now())
+
 class User(Base):
     __tablename__ = "users"
 
@@ -54,6 +65,16 @@ class File(Base):
     categories = relationship("Category", secondary="file_categories", back_populates="files")
     analysis_results = relationship("AnalysisResult", back_populates="file")
     entities = relationship("ExtractedEntity", back_populates="file")
+    source_relationships = relationship(
+        "FileRelationship",
+        foreign_keys=[FileRelationship.source_file_id],
+        backref="source_file"
+    )
+    related_relationships = relationship(
+        "FileRelationship",
+        foreign_keys=[FileRelationship.related_file_id],
+        backref="related_file"
+    )
 
 class FileVersion(Base):
     __tablename__ = "file_versions"
@@ -164,3 +185,51 @@ class ProcessingHistory(Base):
 
     # Relaciones
     plugin = relationship("Plugin", back_populates="processing_history")
+
+class SystemLog(Base):
+    __tablename__ = "system_logs"
+
+    id = Column(Integer, primary_key=True, index=True)
+    level = Column(String(20), nullable=False)
+    component = Column(String(50))
+    message = Column(String(2000))
+    stack_trace = Column(String(4000))
+    created_at = Column(DateTime, default=func.now())
+
+class PerformanceMetric(Base):
+    __tablename__ = "performance_metrics"
+
+    id = Column(Integer, primary_key=True, index=True)
+    metric_name = Column(String(50), nullable=False)
+    metric_value = Column(Float, nullable=False)
+    component = Column(String(50))
+    created_at = Column(DateTime, default=func.now())
+
+class ScheduledTask(Base):
+    __tablename__ = "scheduled_tasks"
+
+    id = Column(Integer, primary_key=True, index=True)
+    task_type = Column(String(50))
+    schedule_type = Column(Enum('one-time', 'recurring'))
+    cron_expression = Column(String(100))
+    last_run = Column(DateTime)
+    next_run = Column(DateTime)
+    settings = Column(JSON)
+    is_active = Column(Boolean, default=True)
+    created_at = Column(DateTime, default=func.now())
+
+class ApiUsage(Base):
+    __tablename__ = "api_usage"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey('users.id'))
+    endpoint = Column(String(255))
+    method = Column(String(10))
+    response_time = Column(Float)
+    status_code = Column(Integer)
+    request_size = Column(Integer)
+    response_size = Column(Integer)
+    created_at = Column(DateTime, default=func.now())
+
+    # Relaciones
+    user = relationship("User")

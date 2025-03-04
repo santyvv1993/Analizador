@@ -45,7 +45,7 @@ CREATE TABLE file_relationships (
     related_file_id INT,
     relationship_type VARCHAR(50),
     confidence FLOAT,
-    metadata JSON,
+    relationship_metadata JSON,  -- Cambiado de metadata a relationship_metadata
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (source_file_id, related_file_id),
     FOREIGN KEY (source_file_id) REFERENCES files(id),
@@ -68,7 +68,7 @@ CREATE TABLE file_versions (
 CREATE TABLE categories (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL UNIQUE,
-    description TEXT,
+    description VARCHAR(1000),  -- Cambiado de TEXT a VARCHAR(1000)
     parent_id INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (parent_id) REFERENCES categories(id)
@@ -92,7 +92,7 @@ CREATE TABLE processing_queue (
     status ENUM('pending', 'processing', 'completed', 'failed') DEFAULT 'pending',
     priority INT DEFAULT 0,
     attempts INT DEFAULT 0,
-    error_message TEXT,
+    error_message VARCHAR(1000),  -- Cambiado de TEXT a VARCHAR(1000)
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     started_at TIMESTAMP,
     completed_at TIMESTAMP,
@@ -146,8 +146,8 @@ CREATE TABLE system_logs (
     id INT AUTO_INCREMENT PRIMARY KEY,
     level VARCHAR(20) NOT NULL,
     component VARCHAR(50),
-    message TEXT,
-    stack_trace TEXT,
+    message VARCHAR(2000),       -- Cambiado de TEXT a VARCHAR(2000)
+    stack_trace VARCHAR(4000),   -- Cambiado de TEXT a VARCHAR(4000)
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -165,9 +165,9 @@ CREATE TABLE extracted_entities (
     id INT AUTO_INCREMENT PRIMARY KEY,
     file_id INT,
     entity_type VARCHAR(50),
-    entity_value TEXT,
+    entity_value VARCHAR(1000),  -- Cambiado de TEXT a VARCHAR(1000)
     confidence FLOAT,
-    context TEXT,
+    context VARCHAR(2000),       -- Cambiado de TEXT a VARCHAR(2000)
     entity_metadata JSON,  -- Cambiado de metadata a entity_metadata
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (file_id) REFERENCES files(id)

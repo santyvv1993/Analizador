@@ -10,7 +10,7 @@ class BaseModel:
 
     id: int
 
-ModelType = TypeVar("ModelType", bound=Base)
+ModelType = TypeVar("ModelType", bound=BaseModel)
 
 class BaseRepository(Generic[ModelType]):
     def __init__(self, model_class: Type[ModelType], db: Session):
