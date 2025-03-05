@@ -1,7 +1,7 @@
 # Definición Funcional: Sistema de Análisis de Información Local
 
 ## 1. Visión General del Proyecto
-Sistema centralizado que permite analizar, clasificar y consultar información de archivos locales, con capacidad de expansión mediante plugins y procesamiento inteligente usando IA.
+Sistema de análisis e indexación que examina archivos en sus ubicaciones originales, sin necesidad de moverlos o copiarlos, proporcionando análisis inteligente mediante IA y capacidades de búsqueda avanzada.
 
 ## 2. Objetivos Principales
 1. Explorar y analizar archivos en el sistema local
@@ -14,22 +14,21 @@ Sistema centralizado que permite analizar, clasificar y consultar información d
 
 ### 3.1 Componentes Principales
 1. **Core del Sistema (Python)**
-   - Scanner de archivos
-   - Gestor de plugins
+   - Indexador de archivos (in-situ)
    - Sistema de análisis con IA
-   - Gestor de base de datos
+   - Procesadores de archivos específicos
    - API REST
 
-2. **Sistema de Plugins**
-   - Plugin de Unreal Engine (C++)
-   - Plugin de documentos (PDF, DOCX, XLSX)
-   - Plugin de multimedia (video, audio)
-   - Sistema extensible para nuevos formatos
+2. **Sistema de Procesadores**
+   - Procesador PDF
+   - Procesador Word
+   - Procesador Excel
+   - Sistema extensible para nuevos tipos
 
 3. **Base de Datos (MySQL)**
-   - Almacenamiento de metadatos
+   - Almacenamiento de análisis
    - Indexación de contenido
-   - Registro de análisis
+   - Referencias a archivos originales
    - Cache de resultados
 
 4. **Integración con IA**
@@ -38,12 +37,11 @@ Sistema centralizado que permite analizar, clasificar y consultar información d
    - Sistema de prompts optimizados
 
 ### 3.2 Flujo de Datos
-1. Detección de archivos nuevos/modificados
-2. Clasificación inicial por tipo
-3. Procesamiento mediante plugins específicos
-4. Análisis con IA para extracción de información
-5. Almacenamiento en base de datos
-6. Indexación para búsquedas
+1. Indexación de archivos en ubicación original
+2. Análisis mediante procesador específico
+3. Análisis con IA para extracción de información
+4. Almacenamiento de resultados en base de datos
+5. Indexación para búsquedas rápidas
 
 ## 4. Tecnologías Seleccionadas
 
@@ -88,11 +86,11 @@ Sistema centralizado que permite analizar, clasificar y consultar información d
 
 ## 6. Funcionalidades Clave
 
-### 6.1 Procesamiento de Archivos
+### 6.1 Indexación y Análisis
+- Análisis in-situ de archivos
+- Sin necesidad de copiar o mover archivos
 - Detección automática de tipos
 - Extracción de metadatos
-- OCR para imágenes
-- Procesamiento de archivos especializados (UASSET)
 
 ### 6.2 Análisis con IA (Actualizado)
 - Sistema multi-proveedor de IA

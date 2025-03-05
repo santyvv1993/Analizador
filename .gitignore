@@ -1,51 +1,32 @@
-# Entorno virtual
-proyecto-core/venv/
-
-# Archivos de caché de Python
+# Python
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
 
-# Archivos de entorno
-.env
+# Entorno virtual
+venv/
+env/
 
-# Archivos del sistema
+# IDEs
+.idea/
+.vscode/
+
+# Logs y reportes
+logs/
+*.log
+htmlcov/
+.coverage
+
+# Archivos temporales
 .DS_Store
 Thumbs.db
-
-# Archivos de configuración de IDE
-.vscode/
-.idea/
-
-# Otros archivos innecesarios
-.pytest_cache/
-.mypy_cache/
-.coverage
-*.cover
-*.log
-*.pot
-*.mo
-*.swp
-*.swo
-*.swn
-*.bak
 *.tmp
-*.old
-*.orig
 
-# Archivos de configuración de herramientas
-*.pylint.d/
-*.mypy_cache/
-*.pytest_cache/
-*.tox/
-*.coverage
-.coverage.*
-.cache/
-nosetests.xml
-coverage.xml
-*.egg-info/
-dist/
-build/
+# Archivos de prueba
+tests/resources/*.pdf
+tests/resources/*.docx
+tests/resources/*.xlsx
 
-# Archivos de resultado pruebas
-report.html
-unknown.*
+# Configuración local
+.env
+.env.local

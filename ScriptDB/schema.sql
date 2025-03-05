@@ -26,11 +26,9 @@ CREATE TABLE user_settings (
 CREATE TABLE files (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
-    filename VARCHAR(255) NOT NULL,
-    file_path VARCHAR(1024) NOT NULL,
+    filename VARCHAR(1024) NOT NULL COMMENT 'Ruta completa al archivo original',
     file_type VARCHAR(50) NOT NULL,
     file_size BIGINT NOT NULL,
-    hash_value VARCHAR(64),
     mime_type VARCHAR(100),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     last_modified TIMESTAMP,
@@ -50,18 +48,6 @@ CREATE TABLE file_relationships (
     PRIMARY KEY (source_file_id, related_file_id),
     FOREIGN KEY (source_file_id) REFERENCES files(id),
     FOREIGN KEY (related_file_id) REFERENCES files(id)
-);
-
--- Add file versions table
-CREATE TABLE file_versions (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    file_id INT,
-    version_number INT,
-    file_path VARCHAR(1024),
-    hash_value VARCHAR(64),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    version_metadata JSON,  -- Cambiado de metadata a version_metadata
-    FOREIGN KEY (file_id) REFERENCES files(id)
 );
 
 -- Categories and Tags
@@ -110,6 +96,12 @@ CREATE TABLE analysis_results (
     analysis_type VARCHAR(50) NOT NULL,
     confidence FLOAT,
     result_data JSON,
+    language VARCHAR(10),
+    summary TEXT,
+    keywords JSON,
+    extracted_metadata JSON,
+    content_hash VARCHAR(64),
+    processing_metadata JSON,
     model_used VARCHAR(100),
     tokens_used INT,
     processing_time FLOAT,
@@ -215,3 +207,13 @@ CREATE INDEX idx_entity_file ON extracted_entities(file_id);
 CREATE INDEX idx_task_next_run ON scheduled_tasks(next_run, is_active);
 CREATE INDEX idx_api_usage_user ON api_usage(user_id, created_at);
 CREATE INDEX idx_file_relationships ON file_relationships(source_file_id, relationship_type);
+CREATE INDEX idx_analysis_language ON analysis_results(language);
+CREATE INDEX idx_analysis_content_hash ON analysis_results(content_hash);
+
+-- Modificar tabla files para remover campos de almacenamiento físico
+ALTER TABLE files
+    DROP COLUMN IF EXISTS file_path,
+    MODIFY COLUMN filename VARCHAR(1024) NOT NULL COMMENT 'Ruta completa al archivo original';
+
+-- Eliminar tabla de versiones ya que no almacenaremos archivos
+DROP TABLE IF EXISTS file_versions;
