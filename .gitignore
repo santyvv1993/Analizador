@@ -45,3 +45,7 @@ coverage.xml
 *.egg-info/
 dist/
 build/
+
+# Archivos de resultado pruebas
+report.html
+unknown.*
