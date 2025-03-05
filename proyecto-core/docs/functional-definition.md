@@ -52,7 +52,11 @@ Sistema centralizado que permite analizar, clasificar y consultar información d
 - **Framework API**: FastAPI
 - **ORM**: SQLAlchemy
 - **Base de Datos**: MySQL
-- **IA**: OpenAI API, deepseek, opcional Llama/Mistral para local
+- **IA Providers**:
+  - OpenAI GPT-4
+  - DeepSeek Chat
+  - Sistema de fallback entre proveedores
+  - Arquitectura extensible para más proveedores
 
 ### 4.2 Plugins y Extensiones
 - **Unreal Engine**: C++
@@ -90,11 +94,13 @@ Sistema centralizado que permite analizar, clasificar y consultar información d
 - OCR para imágenes
 - Procesamiento de archivos especializados (UASSET)
 
-### 6.2 Análisis con IA
-- Clasificación de contenido
-- Extracción de entidades
-- Generación de resúmenes
-- Detección de relaciones
+### 6.2 Análisis con IA (Actualizado)
+- Sistema multi-proveedor de IA
+- Capacidad de cambio dinámico entre proveedores
+- Manejo de fallos y sistema de fallback
+- Prompts optimizados por proveedor
+- Cache de resultados de análisis
+- Sistema de confianza por proveedor
 
 ### 6.3 Sistema de Búsqueda
 - Búsqueda por contenido

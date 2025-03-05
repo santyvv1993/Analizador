@@ -1,5 +1,15 @@
 # Roadmap Actualizado: Sistema Core con Python y MySQL
 
+## Estado General del Proyecto
+- [x] Fase 1: Preparación y Configuración ✅
+- [ ] Fase 2: Módulo de Procesamiento de Archivos
+- [ ] Fase 3: Integración con IA
+- [ ] Fase 4: Sistema de Almacenamiento y Consulta
+- [ ] Fase 5: Interfaz de Administración Desktop
+- [ ] Fase 6: API y Servicios Web
+- [ ] Fase 7: Operaciones Asíncronas y Optimización
+- [ ] Fase 8: Extensibilidad y Plugins
+
 ## Comandos Útiles de Inicialización
 
 1. **Preparación del Entorno**:
@@ -62,146 +72,62 @@
 7. **Fase 7**: Operaciones Asíncronas y Optimización (Semanas 13-14)
 8. **Fase 8**: Extensibilidad y Plugins (Semanas 15-16)
 
-## Fase 1: Preparación y Configuración (Semanas 1-2)
+## Detalle de Progreso por Fase
 
-### Semana 1: Configuración del Entorno
-1. **Día 1-2: Preparación del entorno de desarrollo**
-   - Instalar Python 3.10+ y pip
-   - Instalar MySQL Server y MySQL Workbench
-   - Configurar un entorno virtual con `venv`
-   ```bash
-   python -m venv venv
-   # Activar en Windows
-   venv\Scripts\activate
-   # Activar en macOS/Linux
-   source venv/bin/activate
-   ```
-   - Instalar Git y configurar repositorio
+### Fase 1: Preparación y Configuración ✅
+#### Semana 1: Configuración del Entorno ✅
+- [x] Día 1-2: Preparación del entorno de desarrollo
+- [x] Día 3-4: Estructura inicial del proyecto
+- [x] Día 5: Configuración de variables de entorno
 
-2. **Día 3-4: Estructura inicial del proyecto**
-   - Crear la estructura de carpetas según el diseño propuesto
-   - Inicializar archivo `requirements.txt` con dependencias básicas:
-   ```
-   fastapi==0.115.11
-   uvicorn==0.34.0
-   sqlalchemy==2.0.38
-   mysql-connector-python==9.2.0
-   python-dotenv==1.0.1
-   pydantic==2.10.6
-   pytest==8.3.5
-   PyPDF2==3.0.1
-   pandas==2.2.3
-   openpyxl==3.1.5
-   openai==1.65.2
-   python-multipart==0.0.20
-   PyQt5==5.15.11  # Para interfaz de administración
-   ```
+#### Semana 2: Diseño y Configuración de Base de Datos ✅
+- [x] Día 1-2: Diseño del esquema de base de datos
+- [x] Día 3-4: Configuración ORM
+- [x] Día 5: Pruebas de conexión
 
-3. **Día 5: Configuración de variables de entorno**
-   - Crear archivo `.env.example` y `.env` para variables de entorno
-   - Configurar datos de conexión a MySQL y claves API en `.env`
-   ```
-   # Base de datos
-   DB_HOST=localhost
-   DB_USER=root
-   DB_PASSWORD=your_password
-   DB_NAME=core_system
-   
-   # OpenAI
-   OPENAI_API_KEY=your_api_key
-   
-   # Sistema
-   FILE_STORAGE_PATH=./storage/documents
-   ```
+### Fase 2: Módulo de Procesamiento de Archivos
+#### Semana 3: Procesamiento Básico
+- [x] Día 1-2: Procesamiento de PDFs
+- [ ] Día 3-4: Procesamiento de Excel
+- [ ] Día 5: Sistema de almacenamiento
 
-### Semana 2: Diseño y Configuración de Base de Datos
+#### Semana 4: Procesamiento Avanzado
+- [ ] Día 1-2: Detección de tipos de documento
+- [ ] Día 3-4: Preprocesamiento para IA
+- [ ] Día 5: Pruebas y refinamiento
 
-1. **Día 1-2: Diseño del esquema de base de datos**
-   - Crear script SQL para definir tablas y relaciones
-   - Implementar modelado en workbench
-   - Crear scripts de inicialización y migración
+### Fase 3: Integración con IA (Actualizado)
+#### Semana 5: Sistema Multi-Proveedor
+1. **Día 1-2: Arquitectura Base**
+   - Implementación de interfaces abstractas
+   - Sistema de proveedores intercambiables
+   - Configuración centralizada
 
-2. **Día 3-4: Configuración ORM**
-   - Configurar SQLAlchemy
-   - Implementar modelos de entidades según el esquema
-   - Crear capa de repositorio para acceso a datos
+2. **Día 3-4: Implementación de Proveedores**
+   - Cliente OpenAI
+   - Cliente DeepSeek
+   - Sistema de fallback
 
-3. **Día 5: Pruebas de conexión**
-   - Implementar pruebas de conectividad
-   - Validar operaciones CRUD básicas
-   - Configurar script de migración automática
+3. **Día 5: Sistema de Cache y Optimización**
+   - Cache de resultados
+   - Gestión de cuotas
+   - Monitoreo de uso
 
-## Fase 2: Módulo de Procesamiento de Archivos (Semanas 3-4)
+#### Semana 6: Optimización y Pruebas
+1. **Día 1-2: Prompts y Análisis**
+   - Optimización de prompts por proveedor
+   - Sistema de templating para prompts
+   - Análisis de respuestas estructuradas
 
-### Semana 3: Procesamiento Básico
+2. **Día 3-4: Sistema de Confianza**
+   - Métricas de calidad por proveedor
+   - Sistema de puntuación de respuestas
+   - Lógica de selección de proveedor
 
-1. **Día 1-2: Procesamiento de PDFs**
-   - Implementar clase PDFProcessor
-   - Funciones para extraer texto
-   - Manejo de excepciones y errores
-
-2. **Día 3-4: Procesamiento de Excel**
-   - Implementar clase ExcelProcessor
-   - Funciones para leer hojas y datos
-   - Conversión a formatos manejables
-
-3. **Día 5: Sistema de almacenamiento**
-   - Implementar sistema para guardar archivos en disco
-   - Crear estructura de directorios para organizar archivos
-   - Funciones de carga y descarga de archivos
-
-### Semana 4: Procesamiento Avanzado
-
-1. **Día 1-2: Detección de tipos de documento**
-   - Implementar análisis básico de contenido
-   - Sistema de reglas para clasificación preliminar
-   - Manejo de metadatos de archivos
-
-2. **Día 3-4: Preprocesamiento para IA**
-   - Normalizar texto extraído
-   - Chunking para documentos grandes
-   - Extracción de información básica (fechas, números, etc.)
-
-3. **Día 5: Pruebas y refinamiento**
-   - Pruebas unitarias del módulo de procesamiento
-   - Optimización de rendimiento
-   - Documentación de componentes
-
-## Fase 3: Integración con IA (Semanas 5-6)
-
-### Semana 5: Configuración del Cliente IA
-
-1. **Día 1-2: Implementación de cliente OpenAI**
-   - Configurar conexión a API
-   - Implementar función de análisis básico
-   - Gestión de tokens y costos
-
-2. **Día 3-4: Diseño de prompts**
-   - Crear templates para diferentes tipos de análisis
-   - Optimizar prompts para mejores resultados
-   - Implementar system prompts específicos
-
-3. **Día 5: Manejo de respuestas**
-   - Parsear respuestas JSON
-   - Manejar errores de API
-   - Implementar reintentos y fallbacks
-
-### Semana 6: Procesamiento Avanzado con IA
-
-1. **Día 1-2: Clasificación de documentos**
-   - Implementar análisis de tipo de documento
-   - Extracción de metadatos avanzados
-   - Sistema de confianza para clasificaciones
-
-2. **Día 3-4: Extracción de entidades**
-   - Identificar fechas, montos, personas, etc.
-   - Normalizar entidades extraídas
-   - Relacionar entidades con categorías
-
-3. **Día 5: Generación de resúmenes**
-   - Implementar generación de resúmenes
-   - Extracción de puntos clave
-   - Formateo de salida para almacenamiento
+3. **Día 5: Pruebas y Documentación**
+   - Pruebas de integración
+   - Documentación de uso
+   - Ejemplos de implementación
 
 ## Fase 4: Sistema de Almacenamiento y Consulta (Semanas 7-8)
 
@@ -640,3 +566,15 @@ class PluginManager:
 7. **Seguimiento de Dependencias**
    - **pip-tools**: Para mantener dependencies.txt actualizado
    - **dependabot**: Para actualizaciones automáticas
+
+## Leyenda de Estado
+✅ Completado
+🔄 En Progreso
+⏸️ En Pausa
+❌ Bloqueado
+⭕ Pendiente
+
+## Notas de Progreso
+- Última actualización: [Fecha]
+- Sprint actual: [Número de Sprint]
+- Bloqueantes actuales: [Lista de bloqueantes si existen]
