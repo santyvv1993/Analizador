@@ -38,21 +38,38 @@ Thumbs.db
 
 # Logs
 logs/
+*/logs/
 *.log
+proyecto-core/logs/ai_analysis/*.json
 
 # Tests
 .pytest_cache/
 .coverage
 htmlcov/
 tests/resources/*
+proyecto-core/tests/resources/*
 *.pytest_cache
 report.html
 assets/
 
 # Archivos generados
 storage/
+proyecto-core/storage/
 .env
 .env.local
+proyecto-core/.env
 
 # Base de datos
 *.sqlite3
+
+# Cache de pytest
+.pytest_cache/
+proyecto-core/.pytest_cache/
+
+# Archivos generados por VSCode
+.vscode/
+proyecto-core/.vscode/
+
+# Archivos generados por reportes de pruebas
+proyecto-core/report.html
+proyecto-core/assets/
