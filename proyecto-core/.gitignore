@@ -39,7 +39,7 @@ logs/
 .pytest_cache/
 .coverage
 htmlcov/
-tests/resources/
+tests/resources/*
 *.pytest_cache
 report.html
 assets/
