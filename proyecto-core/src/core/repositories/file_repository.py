@@ -15,3 +15,12 @@ class FileRepository(BaseRepository[File]):
 
     def get_unprocessed_files(self) -> List[File]:
         return self.db.query(File).filter(File.is_processed == False).all()
+
+    def get_by_id(self, file_id: int) -> Optional[File]:
+        return self.db.query(File).filter(File.id == file_id).first()
+    
+    def update(self, file: File) -> File:
+        self.db.add(file)
+        self.db.commit()
+        self.db.refresh(file)
+        return file

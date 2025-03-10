@@ -11,20 +11,23 @@ class AnalysisRepository(BaseRepository[AnalysisResult]):
     def create_analysis(self, analysis_data: dict) -> AnalysisResult:
         """Crea un nuevo registro de análisis"""
         analysis = AnalysisResult(**analysis_data)
-        return self.create(analysis)
+        self.db.add(analysis)
+        self.db.commit()
+        self.db.refresh(analysis)
+        return analysis
 
     def get_by_file_id(self, file_id: int) -> List[AnalysisResult]:
         """Obtiene todos los análisis para un archivo específico"""
         return self.db.query(AnalysisResult)\
             .filter(AnalysisResult.file_id == file_id)\
-            .order_by(desc(AnalysisResult.created_at))\
+            .order_by(desc(AnalysisResult.created_at), desc(AnalysisResult.id))\
             .all()
 
     def get_latest_by_file_id(self, file_id: int) -> Optional[AnalysisResult]:
         """Obtiene el análisis más reciente para un archivo"""
         return self.db.query(AnalysisResult)\
             .filter(AnalysisResult.file_id == file_id)\
-            .order_by(desc(AnalysisResult.created_at))\
+            .order_by(desc(AnalysisResult.created_at), desc(AnalysisResult.id))\
             .first()
 
     def get_by_analysis_type(self, analysis_type: str) -> List[AnalysisResult]:
@@ -35,6 +38,6 @@ class AnalysisRepository(BaseRepository[AnalysisResult]):
 
     def get_recent_analyses(self, limit: int = 10) -> List[AnalysisResult]:
         return self.db.query(AnalysisResult)\
-            .order_by(AnalysisResult.created_at.desc())\
+            .order_by(desc(AnalysisResult.created_at), desc(AnalysisResult.id))\
             .limit(limit)\
             .all()

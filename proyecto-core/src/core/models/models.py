@@ -21,7 +21,7 @@ class User(Base):
     username = Column(String(50), unique=True, nullable=False)
     password = Column(String(255), nullable=False)
     email = Column(String(100), unique=True, nullable=False)
-    role = Column(Enum('admin', 'user', 'api'), nullable=False, default='user')
+    role = Column(String(20), nullable=False, default='user')
     is_active = Column(Boolean, default=True)
     created_at = Column(DateTime, default=func.now())
     last_login = Column(DateTime)
@@ -29,6 +29,9 @@ class User(Base):
     # Relaciones
     settings = relationship("UserSettings", back_populates="user", uselist=False)
     files = relationship("File", back_populates="user")
+
+    def __repr__(self):
+        return f"<User {self.username}>"
 
 class UserSettings(Base):
     __tablename__ = "user_settings"
@@ -47,10 +50,10 @@ class File(Base):
     __tablename__ = "files"
 
     id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey('users.id'))
+    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
     filename = Column(String(255), nullable=False)
     file_path = Column(String(1024), nullable=False)
-    file_type = Column(String(50), nullable=False)
+    file_type = Column(String(50))
     file_size = Column(BigInteger, nullable=False)
     hash_value = Column(String(64))
     mime_type = Column(String(100))
@@ -75,6 +78,9 @@ class File(Base):
         foreign_keys=[FileRelationship.related_file_id],
         backref="related_file"
     )
+
+    def __repr__(self):
+        return f"<File {self.filename}>"
 
 class FileVersion(Base):
     __tablename__ = "file_versions"
@@ -131,10 +137,11 @@ class AnalysisResult(Base):
     __tablename__ = "analysis_results"
 
     id = Column(Integer, primary_key=True, index=True)
-    file_id = Column(Integer, ForeignKey('files.id'))
+    file_id = Column(Integer, ForeignKey('files.id'), nullable=False)
     analysis_type = Column(String(50), nullable=False)
     confidence = Column(Float)
     result_data = Column(JSON)
+    language = Column(String(10))  # Agregar campo 'language'
     model_used = Column(String(100))
     tokens_used = Column(Integer)
     processing_time = Column(Float)
@@ -142,6 +149,9 @@ class AnalysisResult(Base):
 
     # Relaciones
     file = relationship("File", back_populates="analysis_results")
+
+    def __repr__(self):
+        return f"<AnalysisResult {self.id} for file {self.file_id}>"
 
 class ExtractedEntity(Base):
     __tablename__ = "extracted_entities"

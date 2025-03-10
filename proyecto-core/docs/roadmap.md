@@ -2,9 +2,9 @@
 
 ## Estado General del Proyecto
 - [x] Fase 1: Preparación y Configuración ✅
-- [ ] Fase 2: Módulo de Procesamiento de Archivos
-- [ ] Fase 3: Integración con IA
-- [ ] Fase 4: Sistema de Almacenamiento y Consulta
+- [x] Fase 2: Módulo de Procesamiento de Archivos ✅
+- [ ] Fase 3: Integración con IA 🔄
+- [ ] Fase 4: Sistema de Almacenamiento y Consulta 🔄
 - [ ] Fase 5: Interfaz de Administración Desktop
 - [ ] Fase 6: API y Servicios Web
 - [ ] Fase 7: Operaciones Asíncronas y Optimización
@@ -37,6 +37,9 @@
 
    # Opción 3: Usar script de inicialización con schema.sql
    python -m src.core.database.db_setup --use-sql --force
+   
+   # Configurar base de datos de prueba
+   python -m src.core.database.test_db_setup --force
    ```
 
 3. **Ejecutar Pruebas**:
@@ -45,7 +48,7 @@
    pytest tests/ -v
 
    # Ejecutar pruebas específicas de base de datos
-   pytest tests/test_database.py -v
+   pytest -m db -v
 
    # Ejecutar pruebas con reporte HTML
    pytest tests/ --html=report.html
@@ -63,14 +66,14 @@
 ## Introducción
 
 ## Resumen de Fases
-1. **Fase 1**: Preparación y Configuración (Semanas 1-2)
-2. **Fase 2**: Módulo de Procesamiento de Archivos (Semanas 3-4)
-3. **Fase 3**: Integración con IA (Semanas 5-6)
-4. **Fase 4**: Sistema de Almacenamiento y Consulta (Semanas 7-8)
-5. **Fase 5**: Interfaz de Administración Desktop (Semanas 9-10)
-6. **Fase 6**: API y Servicios Web (Semanas 11-12)
-7. **Fase 7**: Operaciones Asíncronas y Optimización (Semanas 13-14)
-8. **Fase 8**: Extensibilidad y Plugins (Semanas 15-16)
+1. **Fase 1**: Preparación y Configuración (Semanas 1-2) ✅
+2. **Fase 2**: Módulo de Procesamiento de Archivos (Semanas 3-4) ✅
+3. **Fase 3**: Integración con IA (Semanas 5-6) 🔄
+4. **Fase 4**: Sistema de Almacenamiento y Consulta (Semanas 7-8) 🔄
+5. **Fase 5**: Interfaz de Administración Desktop (Semanas 9-10) ⏸️
+6. **Fase 6**: API y Servicios Web (Semanas 11-12) ⏸️
+7. **Fase 7**: Operaciones Asíncronas y Optimización (Semanas 13-14) ⏸️
+8. **Fase 8**: Extensibilidad y Plugins (Semanas 15-16) ⏸️
 
 ## Detalle de Progreso por Fase
 
@@ -85,43 +88,50 @@
 - [x] Día 3-4: Configuración ORM
 - [x] Día 5: Pruebas de conexión
 
-### Fase 2: Módulo de Procesamiento de Archivos
+### Fase 2: Módulo de Procesamiento de Archivos ✅
 #### Semana 3: Procesamiento Básico ✅
 - [x] Día 1-2: Procesamiento de PDFs 
 - [x] Día 3-4: Procesamiento de Excel
 - [x] Día 5: Sistema de indexación in-situ
 
-#### Semana 4: Procesamiento Avanzado
-- [ ] Día 1-2: Procesador de Word
-- [ ] Día 3-4: Sistema de detección de tipos
-- [ ] Día 5: Pruebas y optimización
+#### Semana 4: Procesamiento Avanzado ✅
+- [x] Día 1-2: Procesador de Word
+- [x] Día 3-4: Sistema de detección de tipos
+- [x] Día 5: Pruebas y optimización
 
-### Fase 3: Integración con IA
-#### Semana 5: Sistema Multi-Proveedor
+### Fase 3: Integración con IA 🔄
+#### Semana 5: Sistema Multi-Proveedor 🔄
 - [x] Día 1-2: Arquitectura base con DeepSeek ✅
 - [x] Día 3-4: Sistema de análisis y logging ✅
-- [ ] Día 5: Optimización de prompts
+- [ ] Día 5: Optimización de prompts 🔄
 
-### Fase 4: Sistema de Almacenamiento y Consulta (Semanas 7-8)
+#### Semana 6: Análisis Avanzado ⏸️
+- [ ] Día 1-2: Análisis semántico
+- [ ] Día 3-4: Gestión de memoria y optimización
+- [ ] Día 5: Pruebas y refinamiento
 
-### Semana 7: Almacenamiento Estructurado
+### Fase 4: Sistema de Almacenamiento y Consulta 🔄
 
-1. **Día 1-2: Implementación de repositorios**
-   - Implementar DocumentRepository
-   - Implementar CategoryRepository
-   - Implementar EntityRepository
+#### Semana 7: Almacenamiento Estructurado 🔄
 
-2. **Día 3-4: Servicios de almacenamiento**
-   - Crear servicios para guardar resultados de IA
-   - Implementar transacciones para operaciones múltiples
-   - Gestión de relaciones entre entidades
+1. **Día 1-2: Implementación de repositorios** 🔄
+   - [x] Implementar BaseRepository genérico
+   - [x] Implementar FileRepository
+   - [x] Implementar AnalysisRepository
+   - [ ] Implementar CategoryRepository
+   - [ ] Implementar UserRepository
 
-3. **Día 5: Validación y normalización**
-   - Implementar validadores de datos
-   - Normalizar información antes de almacenar
-   - Manejo de conflictos y duplicados
+2. **Día 3-4: Servicios de almacenamiento** ⏸️
+   - [x] Crear servicios para guardar resultados de IA
+   - [ ] Implementar transacciones para operaciones múltiples
+   - [ ] Gestión de relaciones entre entidades
 
-### Semana 8: Sistema de Consultas
+3. **Día 5: Validación y normalización** ⏸️
+   - [ ] Implementar validadores de datos
+   - [ ] Normalizar información antes de almacenar
+   - [ ] Manejo de conflictos y duplicados
+
+### Semana 8: Sistema de Consultas ⏸️
 
 1. **Día 1-2: Consultas básicas**
    - Implementar búsqueda por tipo de documento
@@ -548,15 +558,18 @@ class PluginManager:
 ⭕ Pendiente
 
 ## Notas de Progreso
-- Última actualización: [Fecha actual]
-- Sprint actual: Fase 2 - Semana 4
+- Última actualización: 29/02/2024
+- Sprint actual: Fase 4 - Semana 7 (Repositorios)
 - Completado: 
-  * Sistema de procesamiento PDF
-  * Sistema de procesamiento Excel
+  * Sistema de procesamiento completo (PDF, Excel, Word)
+  * Sistema de detección de tipos
   * Indexación in-situ
   * Integración básica con DeepSeek
   * Sistema de logging
+  * Pruebas unitarias para todos los componentes
+  * Base de datos de prueba separada
+  * Implementación de repositorios base (FileRepository, AnalysisRepository)
 - En progreso:
-  * Procesador de Word
-  * Sistema de detección de tipos
-  * Optimización de prompts
+  * Implementación de repositorios adicionales
+  * Optimización de procesamiento
+  * Preparación para sistema de plugins

@@ -147,3 +147,81 @@ def test_ai_analysis_integration(word_processor, sample_docx_path_with_content):
     assert "summary" in analysis_result
     assert "keywords" in analysis_result
     assert "entities" in analysis_result
+
+# Nuevas pruebas para funciones específicas del WordProcessor
+
+def test_extract_tables(word_processor, sample_docx_path_with_content):
+    """Prueba la extracción de tablas de un documento Word"""
+    doc = docx.Document(sample_docx_path_with_content)
+    tables_content = word_processor._extract_tables(doc)
+    
+    # Verificar que se extraen correctamente las tablas
+    assert len(tables_content) > 0
+    assert "Company | Sector" in tables_content[0]
+    assert "Microsoft Corporation | Technology" in tables_content[0]
+    assert "Amazon Web Services | Cloud Services" in tables_content[0]
+
+def test_table_to_dict(word_processor, sample_docx_path_with_content):
+    """Prueba la conversión de tablas a diccionario"""
+    doc = docx.Document(sample_docx_path_with_content)
+    table_dict = word_processor._table_to_dict(doc.tables[0])
+    
+    # Verificar estructura del diccionario
+    assert "rows" in table_dict
+    assert "dimensions" in table_dict
+    assert table_dict["dimensions"]["rows"] == 4
+    assert table_dict["dimensions"]["columns"] == 2
+    
+    # Verificar contenido de las filas
+    assert table_dict["rows"][0][0] == "Company"
+    assert table_dict["rows"][1][0] == "Microsoft Corporation"
+    assert table_dict["rows"][1][1] == "Technology"
+
+def test_extract_document_statistics(word_processor, sample_docx_path):
+    """Prueba la extracción de estadísticas del documento"""
+    doc = docx.Document(sample_docx_path)
+    stats = word_processor._extract_document_statistics(doc)
+    
+    # Verificar estadísticas básicas
+    assert "paragraphs" in stats
+    assert "tables" in stats
+    assert "sections" in stats
+    assert "character_count" in stats
+    assert "word_count" in stats
+    
+    # Verificar valores
+    assert stats["paragraphs"] > 0
+    assert stats["tables"] == 1
+    assert stats["character_count"] > 0
+    assert stats["word_count"] > 0
+
+def test_count_pages(word_processor, sample_docx_path_with_content):
+    """Prueba la estimación del número de páginas"""
+    doc = docx.Document(sample_docx_path_with_content)
+    pages = word_processor._count_pages(doc)
+    
+    # Verificar que se estima al menos 1 página
+    assert pages >= 1
+    
+    # El documento de prueba debería tener al menos una página
+    assert isinstance(pages, int)
+
+def test_extract_keywords(word_processor):
+    """Prueba la extracción de palabras clave"""
+    content = """
+    This is a test document for analyzing keyword extraction functionality.
+    The document contains multiple occurrences of important keywords.
+    Keywords should be extracted based on their frequency and relevance.
+    Important keywords might include document, extraction, keywords, frequency, and relevance.
+    """
+    
+    keywords = word_processor._extract_keywords(content)
+    
+    # Verificar estructura de las palabras clave
+    assert isinstance(keywords, list)
+    assert len(keywords) <= 10
+    
+    # Verificar palabras clave esperadas
+    common_keywords = ["document", "keywords", "extraction", "frequency", "relevance"]
+    found = [kw for kw in keywords if kw in common_keywords]
+    assert len(found) > 0, "No se encontraron palabras clave esperadas"
