@@ -96,7 +96,7 @@ CREATE TABLE analysis_results (
     analysis_type VARCHAR(50) NOT NULL,
     confidence FLOAT,
     result_data JSON,
-    language VARCHAR(10),
+    language VARCHAR(10),  -- Campo language ahora explícitamente definido
     summary TEXT,
     keywords JSON,
     extracted_metadata JSON,
