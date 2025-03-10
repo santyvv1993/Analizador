@@ -2,31 +2,57 @@
 __pycache__/
 *.py[cod]
 *$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
 
 # Entorno virtual
 venv/
 env/
+ENV/
 
-# IDEs
+# IDE
 .idea/
 .vscode/
-
-# Logs y reportes
-logs/
-*.log
-htmlcov/
-.coverage
+*.swp
+*.swo
 
 # Archivos temporales
 .DS_Store
 Thumbs.db
 *.tmp
 
-# Archivos de prueba
-tests/resources/*.pdf
-tests/resources/*.docx
-tests/resources/*.xlsx
+# Logs
+logs/
+*.log
 
-# Configuración local
+# Tests
+.pytest_cache/
+.coverage
+htmlcov/
+tests/resources/*
+*.pytest_cache
+report.html
+assets/
+
+# Archivos generados
+storage/
 .env
 .env.local
+
+# Base de datos
+*.sqlite3
