@@ -65,3 +65,51 @@ class AILogger:
             f"Error: {str(error)}",
             exc_info=True
         )
+
+    def log_prompt_evaluation(
+        self,
+        file_path: str,
+        prompt: str, 
+        response: str, 
+        metrics: Dict[str, Any],
+        provider: str
+    ) -> None:
+        """
+        Registra una evaluación completa de prompt y respuesta.
+        
+        Args:
+            file_path: Ruta del archivo analizado
+            prompt: El prompt utilizado
+            response: La respuesta recibida
+            metrics: Métricas de evaluación calculadas
+            provider: Proveedor de IA utilizado
+        """
+        # Log simple con el logger estándar
+        success = metrics.get("success", False)
+        confidence = metrics.get("confidence_score", 0.0)
+        self.logger.info(
+            f"Evaluación de prompt - Archivo: {Path(file_path).name} - "
+            f"Proveedor: {provider} - Éxito: {success} - "
+            f"Confianza: {confidence:.2f}"
+        )
+        
+        # Si hay directorio de logs, guardamos detalles completos
+        if self.log_dir:
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            filename = f"{timestamp}_{Path(file_path).name}_{provider}.json"
+            log_path = self.log_dir / filename
+            
+            log_data = {
+                "timestamp": datetime.now().isoformat(),
+                "file_path": file_path,
+                "provider": provider,
+                "prompt": prompt,
+                "response": response,
+                "metrics": metrics
+            }
+            
+            try:
+                with open(log_path, 'w', encoding='utf-8') as f:
+                    json.dump(log_data, f, ensure_ascii=False, indent=2)
+            except Exception as e:
+                self.logger.error(f"Error al guardar log detallado: {e}")

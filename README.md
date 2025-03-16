@@ -1,29 +1,43 @@
 # Sistema Analizador de Información Local
 
 [![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)](https://semver.org)
-[![License](https://img.shields.io-badge/license-MIT-green.svg)](LICENSE)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 ## Descripción General
 Sistema de análisis e indexación que examina archivos en sus ubicaciones originales, proporcionando análisis inteligente mediante IA y capacidades de búsqueda avanzada. No requiere mover o copiar archivos, trabajando directamente con los documentos en su ubicación original.
 
 ## Funcionalidades Principales
 - 📁 Análisis in-situ de archivos (PDF, Excel, Word)
-- 🤖 Análisis mediante IA (OpenAI/DeepSeek)
+- 🤖 Análisis mediante IA con sistema multi-proveedor (DeepSeek/OpenAI)
 - 🔍 Indexación y búsqueda avanzada
 - 📊 Extracción inteligente de información
-- 🧩 Sistema extensible de procesadores
+- 🧩 Sistema extensible de procesadores y plugins
 - 🌐 API REST para integraciones
+
+## Estado del Proyecto
+- ✅ Fase 1: Preparación y Configuración **[Completado]**
+- ✅ Fase 2: Módulo de Procesamiento de Archivos **[Completado]** 
+- 🔄 Fase 3: Integración con IA **[En Progreso]**
+- 🔄 Fase 4: Sistema de Almacenamiento y Consulta **[En Progreso]**
+- ⏸️ Fase 5-8: Interfaz, API, Optimización y Plugins **[Pendientes]**
+
+Consulta el [Roadmap completo](docs/roadmap.md) y el [Seguimiento diario](docs/daily-progress.md) para más detalles.
 
 ## Estructura del Proyecto
 ```
 proyecto-core/
 ├── src/
-│   ├── desktop_app/     # Aplicación de escritorio
-│   ├── core/            # Núcleo del sistema
-│   └── tests/           # Pruebas
-├── docs/                # Documentación detallada
-├── requirements.txt     # Dependencias del proyecto
-└── .env.example         # Plantilla de variables de entorno
+│   ├── core/
+│   │   ├── processors/     # Procesadores de archivos
+│   │   ├── repositories/   # Repositorios de datos
+│   │   ├── services/       # Servicios de negocio
+│   │   ├── ai/             # Integración con IA
+│   │   ├── database/       # Configuración de BD
+│   │   └── utils/          # Utilidades
+│   └── tests/              # Pruebas unitarias
+├── docs/                   # Documentación detallada
+├── requirements.txt        # Dependencias del proyecto
+└── .env.example            # Plantilla de variables de entorno
 ```
 
 ## Primeros Pasos
@@ -75,9 +89,18 @@ python -m src.core.api.main
 python -m src.desktop_app.main
 ```
 
-## Configuración de Proveedores de IA
+### Configuración de Proveedores de IA
 
 El sistema soporta múltiples proveedores de IA. Configura las credenciales en tu archivo .env:
+
+```bash
+# Configuración de DeepSeek (Principal)
+DEEPSEEK_API_KEY=tu_api_key
+DEEPSEEK_BASE_URL=https://api.deepseek.com
+
+# Configuración de OpenAI (Fallback)
+OPENAI_API_KEY=tu_api_key
+```
 
 ## Ejemplos de Uso
 
@@ -115,6 +138,7 @@ curl http://localhost:8000/api/documents/1/analysis
 - [Guía de Desarrollo](docs/development-guide.md) - Guías para desarrolladores
 - [Definición Funcional](docs/functional-definition.md) - Especificación detallada
 - [Roadmap](docs/roadmap.md) - Plan de desarrollo detallado
+- [Seguimiento Diario](docs/daily-progress.md) - Estado actual del proyecto
 - [Documentación Técnica](docs/technical/) - Detalles técnicos
 - [Documentación de API](docs/api/) - Referencia de la API REST
 
